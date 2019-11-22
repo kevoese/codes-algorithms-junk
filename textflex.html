@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style>
+      .container {
+        min-height: 100vh;
+        background-color: aliceblue;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        width: 80%;
+        margin: 0 auto;
+      }
+      .wrap {
+        width: 400%;
+        background-color: grey;
+        display: grid;
+        grid-template-columns: repeat(12, 30%);
+        grid-gap: 5%;
+        height: 400px;
+      }
+      .box1 {
+        background-color: red;
+      }
+      .box2 {
+        background-color: blue;
+      }
+
+      .circleObj {
+        /* circumference = 2*pi*radius 
+          c = 2 * 3.14 * 100;
+          percentage calc => (percent) => c - (percent * c/100)
+        */
+        stroke-dasharray: 629;
+        stroke-dashoffset: 29;
+      }
+      .addAnimate {
+        animation: grow 1.5s 2s forwards ease-out;
+      }
+      @keyframes grow {
+        to {
+          stroke-dashoffset: 200;
+        }
+      }
+      .myPackage {
+        position: relative;
+      }
+      .countme {
+        position: absolute;
+        font-size: 3em;
+        padding: 0;
+        margin: 0;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <!-- <div class="wrap">
+        <div class="box1"></div>
+        <div class="box2"></div>
+        <div class="box1"></div>
+        <div class="box2"></div>
+        <div class="box1"></div>
+        <div class="box2"></div>
+        <div class="box1"></div>
+        <div class="box2"></div>
+        <div class="box1"></div>
+        <div class="box2"></div>
+        <div class="box1"></div>
+        <div class="box2"></div>
+      </div> -->
+      <input type="file" class="myinput" /><br />
+      <img id="output" />
+    </div>
+
+    <script>
+      let inputBody = document.querySelector('.myinput');
+      inputBody.addEventListener('change', async event => {
+        var input = event.target;
+
+        var reader = new FileReader();
+        reader.onload = async () => {
+          var dataURL = reader.result;
+
+          var output = document.getElementById('output');
+          output.src = dataURL;
+          const [picture] = input.files;
+          const profileForm = new FormData();
+          console.log(picture);
+          profileForm.append('image', picture, picture.name);
+          console.log( profileForm.get('image') );
+          const obj = {
+            method: 'POST',
+            headers: new Headers({
+              'Content-Type': 'multipart/form-data',
+            }),
+            body: profileForm,
+          };
+
+          const response = await fetch('http://localhost:2000/testUpload', obj);
+
+          const result = await response.json();
+          console.log('response', result);
+        };
+        reader.readAsDataURL(input.files[0]);
+      });
+      //     var openFile = function(event) {
+      //   var input = event.target;
+
+      //   var reader = new FileReader();
+      //   reader.onload = function(){
+      //     var dataURL = reader.result;
+      //     console.log(typeof dataURL);
+      //     var output = document.getElementById('output');
+      //     output.src = dataURL;
+      //   };
+      //   reader.readAsDataURL(input.files[0]);
+      // };
+    </script>
+  </body>
+</html>

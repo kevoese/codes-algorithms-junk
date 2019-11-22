@@ -1,0 +1,2 @@
+Writing to a file using writefile method 
+from a buffer Writing to a file using writefile method 

@@ -1,7 +1,7 @@
 //fs.mkdir(path, mode, callback)
 //fs.mkdirSync(path, mode) ==> synchronous
 
-const newdir = 'newDir';
+const newdir = 'src/newDir';
 
 const fs = require('fs');
 
@@ -11,7 +11,7 @@ function func1() {
 }
 
 // let files = fs.mkdirSync(eventsdir, {encoding: 'buffer'}); // returns a buffer of the file names
-fs.mkdirSync(newdir); // by default encoding is utf8 returns the file names
+//fs.mkdirSync(newdir); // by default encoding is utf8 returns the file names
 fs.writeFileSync(`${newdir}/newfile.js`, `(${func1.toString()})()`);
 
 // using async reading from a buf of the dir path

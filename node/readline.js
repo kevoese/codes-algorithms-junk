@@ -44,3 +44,40 @@ async function processLineByLine() {
   }
   
   processLineByLine();
+
+  class interactive extends events.EventEmitter {
+    constructor(questions) {
+      super();
+      this.questions = questions;
+      this.interface = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+      });
+      this._count = 0;
+      this.projectInfo = {
+        name: '',
+        description: '',
+        author: '',
+        root: 'src',
+      };
+    }
+  
+    getInfo() {
+      this.on('getQuest', data => {
+        this.interface.question(data, answer => {
+          if (answer.toUpperCase() === 'D') {
+            this._count = this.questions.length;
+          } else this.projectInfo[this.questions[this._count++].key] = answer;
+  
+          if (this.questions[this._count]) {
+            this.emit('getQuest', this.questions[this._count].question);
+          } else {
+            this.interface.close();
+            this.emit('done', this.projectInfo);
+          }
+        });
+      });
+  
+      this.emit('getQuest', this.questions[this._count].question);
+    }
+  }

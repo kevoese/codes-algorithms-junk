@@ -436,3 +436,77 @@ function getRes3(arr) {
 }
 
 console.log(getRes3(testarr));
+
+const addOne = (arr) => {
+  let str = ''
+//  const num = Number(arr.join('')) + 1;
+  for ( i = 0; i < arr.length; i ++) {
+      
+      
+      str = str + Number(arr[i]);
+      
+  }
+  let ans = Number(str) + 1;
+  let res = ans + '';
+  
+  res = res.split('');
+  return res;
+}
+
+console.log(addOne(['1', '2', '9', '00']));
+
+// function spiderMove(x, y) {
+
+//     x = Math.abs(x);
+//     y = Math.abs(y);
+
+//     var n = [];
+//     for (var i = 0; i < x + 1; i++) {
+//       n.push(1);
+//     }
+
+//     for (var i = 0; i < y; i++) {
+//       for (var j = 1; j < x + 1; j++) {
+//         n[j] = n[j - 1] + n[j];
+//       }
+//     }
+//     return n;
+//   }
+
+// console.log(addOne([9, 9, 9]));
+function cleanUp(num, k) {
+  let number = num.split('')
+   const arr = [];
+
+   for(i = 0; i < number.length; i++) {
+       if(i % k === 0 && number[i] == 0) {        
+           number.splice(i, 1);
+           i--
+       } else {
+           arr.push(number[i])
+       }
+   }
+return arr;
+}
+
+function splitNumber(number, k) {
+  const res = cleanUp(number, k);
+  const arr = [];
+  
+  let count = 1;
+      for(let i = 1; i < res.length; i ++) {
+          if(count < k) {
+              count++
+          }
+          if(count === k) {
+           
+           arr.push(`${res[i-1]}${res[i]}`);
+           count = 0;
+          }
+      
+      }
+   
+    return arr
+}
+
+//console.log(splitNumber( "12045", 2));
